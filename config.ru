@@ -1,2 +1,2 @@
-require './lib/my_app'
+require './my_app'
 run MyApp
