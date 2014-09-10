@@ -3,12 +3,11 @@ require 'slim'
 
 class MyApp < Sinatra::Base
   set :sessions, true
-  set :foo, 'bar'
   set :static, true
 
-  set :username, ''
+  set :username, nil
+  set :password, nil
   set :token, 'maketh1$longandh@rdtoremember'
-  set :password, ''
 
   helpers do
     def admin?
@@ -33,7 +32,7 @@ class MyApp < Sinatra::Base
   end
 
   post '/login' do
-    if params['username']==settings.username&&params['password']==settings.password
+    if settings.username && settings.password && params['username']==settings.username&&params['password']==settings.password
       response.set_cookie(settings.username, settings.token)
       redirect '/private'
     else
@@ -60,41 +59,6 @@ class MyApp < Sinatra::Base
     settings.password = params['password']
     redirect '/'
   end
-
-#register do
-#  def auth (type)
-#    condition do
-#      redirect "/login" unless send("is_#{type}?")
-#    end
-#  end
-#end
-#
-#helpers do
-#  def is_user?
-#    @user != nil
-#  end
-#end
-#
-#before do
-#  @user = User.get(session[:user_id])
-#end
-#
-#get "/" do
-#  "Hello, anonymous."
-#end
-#
-#get "/protected", :auth => :user do
-#  "Hello, #{@user.name}."
-#end
-#
-#post "/login" do
-#  session[:user_id] = User.authenticate(params).id
-#end
-#
-#get "/logout" do
-#  session[:user_id] = nil
-#end
-
 end
 
 
