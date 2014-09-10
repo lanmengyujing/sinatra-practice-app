@@ -4,6 +4,7 @@ require 'slim'
 class MyApp < Sinatra::Base
   set :sessions, true
   set :static, true
+  set :views, File.dirname(__FILE__) + '/app/views'
 
   set :username, nil
   set :password, nil
