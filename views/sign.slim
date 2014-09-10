@@ -1,0 +1,8 @@
+form.sign-up-form(action="/sign" method="post")
+  .username
+    label(for="username")Input your username:
+    input#username(type="text" name="username")
+  .password
+    label(for="password")Input your password:
+    input#password(type="password" name="password")
+  input(type="submit" value="Sign up") or <a class="cancel-sign" href="/">Cancel</a>

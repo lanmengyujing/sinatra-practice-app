@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title  Just Do It
+    meta charset="utf-8"
+    link rel="stylesheet" type="text/css" href="css/application.css"
+  body
+    ul
+      li
+        a(href='/admin')Login
+      li
+        a(href='/sign')Sign up
+      li
+        a(href='/logout')Logout
+      li
+        a(href='/private')Private
+    == yield

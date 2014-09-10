@@ -1,0 +1,16 @@
+.sign-up-form{
+    font-size: 24px;
+    margin-left: 28px;
+}
+
+.sign-up-form .username{
+    display: block;
+}
+
+.sign-up-form .password{
+    display: block;
+}
+
+.cancel-sign{
+    font-size: 18px;
+}
