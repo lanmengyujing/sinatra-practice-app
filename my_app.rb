@@ -1,7 +1,14 @@
 require 'sinatra'
 require 'slim'
+require 'sinatra/activerecord'
+require './environments'
+
+class Post < ActiveRecord::Base
+
+end
 
 class MyApp < Sinatra::Base
+  use Rack::Session::Pool, :expire_after => 2592000
   set :sessions, true
   set :static, true
   set :views, File.dirname(__FILE__) + '/app/views'
