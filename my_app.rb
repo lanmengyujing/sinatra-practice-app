@@ -3,14 +3,9 @@ require 'slim'
 require 'sinatra/activerecord'
 require './environments'
 
-class Post < ActiveRecord::Base
+require_relative 'app/models/user'
+require_relative 'app/models/post'
 
-end
-
-class User < ActiveRecord::Base
-  validates :password, presence: true, length: { minimum: 5 }
-  validates :name, presence: true
-end
 
 
 class MyApp < Sinatra::Base
@@ -46,8 +41,10 @@ class MyApp < Sinatra::Base
   end
 
   post '/login' do
-    if settings.username && settings.password && params['username']==settings.username&&params['password']==settings.password
-      response.set_cookie(settings.username, settings.token)
+    user = User.find_by(name: params['username'])
+    if user && user.name == params['username']
+        settings.username = params['username']
+        response.set_cookie(params['username'], settings.token)
       redirect '/private'
     else
       "Username or Password incorrect"
@@ -69,9 +66,12 @@ class MyApp < Sinatra::Base
   end
 
   post '/sign' do
-    settings.username = params['username']
-    settings.password = params['password']
-    redirect '/'
+    @user = User.new(name: params['username'], password: params['password'])
+    if @user.save
+      redirect "/"
+    else
+      redirect "/sign"
+    end
   end
 
   get "/post" do
