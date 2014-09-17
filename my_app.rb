@@ -7,6 +7,12 @@ class Post < ActiveRecord::Base
 
 end
 
+class User < ActiveRecord::Base
+  validates :password, presence: true, length: { minimum: 5 }
+  validates :name, presence: true
+end
+
+
 class MyApp < Sinatra::Base
   use Rack::Session::Pool, :expire_after => 2592000
   set :sessions, true
@@ -66,6 +72,12 @@ class MyApp < Sinatra::Base
     settings.username = params['username']
     settings.password = params['password']
     redirect '/'
+  end
+
+  get "/post" do
+    @posts = Post.order("created_at DESC")
+
+    slim :posts
   end
 end
 
